@@ -1,0 +1,156 @@
+<HTML>
+<HEAD>
+<TITLE>mffinder - A program to detect genetic interaction patterns in genetic data sets</TITLE>
+<LINK REV="made" HREF="mailto:bhcompile@daffy.perf.redhat.com">
+</HEAD>
+
+<BODY>
+
+<A NAME="__index__"></A>
+<!-- INDEX BEGIN -->
+
+<UL>
+
+	<LI><A HREF="#name">NAME</A></LI>
+	<LI><A HREF="#synopsis">SYNOPSIS</A></LI>
+	<LI><A HREF="#description">DESCRIPTION</A></LI>
+	<UL>
+
+		<LI><A HREF="#calling the program">Calling the program</A></LI>
+		<LI><A HREF="#the input file format">The input file format</A></LI>
+		<LI><A HREF="#the format of the output">The format of the output</A></LI>
+	</UL>
+
+</UL>
+<!-- INDEX END -->
+
+<HR>
+<P>
+<H1><A NAME="name">NAME</A></H1>
+<P>mffinder - A program to detect genetic interaction patterns in genetic data sets</P>
+<P>
+<HR>
+<H1><A NAME="synopsis">SYNOPSIS</A></H1>
+<P>mffinder [<STRONG>-dCvntxmSosl</STRONG>] <EM>input-file</EM> <EM>ACLength</EM> [<EM>minData</EM> <EM>ORPredis</EM> <EM>ORProt</EM>]</P>
+<P>
+<HR>
+<H1><A NAME="description">DESCRIPTION</A></H1>
+<P>
+<H2><A NAME="calling the program">Calling the program</A></H2>
+<P>The minimum amount of information to be given to the program is an input file (see section 'The input file format') and the number of alleles which shall contistute the allele combinations (ACs; given by <EM>ACLength</EM>). Optionally <EM>minData</EM> specifies the minimum number of observations for an AC such that it is included in the output. <EM>ORPredis</EM> and <EM>ORProt</EM> are odds ratios which also constrain the output. If the OR as computed for an AC is smaller than <EM>ORPredis</EM> and bigger than <EM>ORProt</EM> this AC is not output.
+Options are as follows:</P>
+<DL>
+<DT><STRONG><A NAME="item_%2Dd_direction">-d <EM>direction</EM></A></STRONG><BR>
+<DD>
+Direction of the bootstrap procedure to compute the test statistic.
+<P></P>
+<DT><STRONG><A NAME="item_%2DC_count">-C <EM>count</EM></A></STRONG><BR>
+<DD>
+Number of cycles to estimate the distribution of the test statistic
+<P></P>
+<DT><STRONG><A NAME="item_%2Dv">-v</A></STRONG><BR>
+<DD>
+Do verbose output.
+<P></P>
+<DT><STRONG><A NAME="item_%2Dn">-n</A></STRONG><BR>
+<DD>
+Do not sort the output. List ACs by the lexikographic order given by locus positions (the order defined by the input file) and allele names (the numbers chosen to denote individual alleles).
+<P></P>
+<DT><STRONG><A NAME="item_%2Dt">-t</A></STRONG><BR>
+<DD>
+Print the output as tab-separted table.
+<P></P>
+<DT><STRONG><A NAME="item_%2Dx">-x</A></STRONG><BR>
+<DD>
+Ignore ACs which have 0 observations in either group.
+<P></P>
+<DT><STRONG><A NAME="item_%2Dm_simulation_specification">-m <EM>simulation specification</EM></A></STRONG><BR>
+<DD>
+Do power simulations. This option requires an argument which specifies a file name which holds further information of what to simulate. This is not yet covered in this manual.
+<P></P>
+<DT><STRONG><A NAME="item_%2DS_sortingType">-S <EM>sortingType</EM></A></STRONG><BR>
+<DD>
+Sort the output according to an option argument. Valid sorting methods are 'or', 'nor', 'frequency', 'p', 'none' with obvious meanings.
+<P></P>
+<DT><STRONG><A NAME="item_%2Do_path">-o <EM>path</EM></A></STRONG><BR>
+<DD>
+Write the output to the file given as option argument
+<P></P>
+<DT><STRONG><A NAME="item_%2Ds_model">-s <EM>model</EM></A></STRONG><BR>
+<DD>
+Compute the test statistic for the data with model <EM>model</EM> which is one in 'Additive', 'SingleCount', 'Genotypes'.
+<P></P>
+<DT><STRONG><A NAME="item_%2Dl_loci">-l <EM>loci</EM></A></STRONG><BR>
+<DD>
+Use exactly the loci given as the option argument for further analysis (e.g. -l ``l1 l2 someLocus'').
+<P></P></DL>
+<P>
+<H2><A NAME="the input file format">The input file format</A></H2>
+<P>mffinder reads an input file given as a tab-separted ascii file. It contains both genotype and phenotype information on all individuals to be analyzed.
+The first line contains names of the columns. Each column holds genotype information for one locus except for the last column which holds the phenotype.</P>
+<P><TABLE CELLSPACING=0 CELLPADDING=0><TR><TD>Example:
+<TR><TD> locus1<TD>locus2<TD>HLA<TD>phenotype
+<TR><TD> 01<TD>02<TD>03<TD>1
+<TR><TD> 02<TD>02<TD>15<TD>1
+<TR><TD> 02<TD>.<TD>.<TD>0
+<TR><TD> 02<TD>.<TD>.<TD>0</TABLE></P>
+<P>The locus names are ``locus1'', ``locus2'' and ``HLA'', respectively. The last column describes the phenotype irrespective of its name. All other lines occur in pairs with each pair describing an individual. Each line holds one allele observed at each locus in the same order as listed in the first line. The last number has to be the phenotype of the individual. The second line gives the second alleles of the genotypes of the individual and the phenotype is repeated in the last column. Missing data is represented as '.' (dot). All genotypes must be one or tow digit numbers and the phenotype must be either '0' or '1'.</P>
+<P>
+<H2><A NAME="the format of the output">The format of the output</A></H2>
+<P>The output starts with a line listing all loci for which the following analysis is conducted (quotes are inset):</P>
+<PRE>
+ Loci under scrutiny: IFNA1 TNFRSF1A-2 NFKBIA-6</PRE>
+<P>Next for each penetrance model identical sections are being output.</P>
+<PRE>
+ Model: Additive
+ Count of tests: 20609
+ Allele Combination     CTU     CAU     CTA     CAA     FU      FA      RR      p       REE
+ IFNA1:07, TNFRSF1A-2:02        1       1360    40      1580    0.0007  0.0253  34.43   0.0000  2.7846
+ IFNA1:07, NFKBIA-6:01  3       1324    44      648     0.0023  0.0679  29.97   0.0000  2.4073</PRE>
+<P>The examples shows a excerpt from a concrete analysis. Here the <EM>Additive</EM> model is shown. The line <EM>Count of tests</EM> holds the information of how many test statistics were computed which can be used for some correction procedure. The next line describes the columns of the table listed from the 4th line on.</P>
+<DL>
+<DT><STRONG><A NAME="item_Allele_Combination">Allele Combination</A></STRONG><BR>
+<DD>
+The allele combination is listed in the following form l1:a1, l2:a2, ... ln:an where l1, ..., ln are names of the loci and a1, ..., an are the names of the alleles (which must be numbers in the current implementation).
+<P></P>
+<DT><STRONG><A NAME="item_CTU">CTU</A></STRONG><BR>
+<DD>
+<STRONG>C</STRONG>ount of <STRONG>t</STRONG>his AC in the group of <STRONG>u</STRONG>naffecteds.
+<P></P>
+<DT><STRONG><A NAME="item_CAU">CAU</A></STRONG><BR>
+<DD>
+<STRONG>C</STRONG>ount of <STRONG>a</STRONG>ll ACs in the group of <STRONG>u</STRONG>naffecteds which were observed for the loci of the current AC.
+<P></P>
+<DT><STRONG><A NAME="item_CTA">CTA</A></STRONG><BR>
+<DD>
+<STRONG>C</STRONG>ount of <STRONG>t</STRONG>his AC in the group of <STRONG>a</STRONG>ffecteds.
+<P></P>
+<DT><STRONG><A NAME="item_CAA">CAA</A></STRONG><BR>
+<DD>
+<STRONG>C</STRONG>ount of <STRONG>a</STRONG>ll ACs in the group of <STRONG>a</STRONG>ffecteds which were observed for the loci of the current AC.
+<P></P>
+<DT><STRONG><A NAME="item_FU">FU</A></STRONG><BR>
+<DD>
+The <STRONG>f</STRONG>requency of this AC as computed from CTU and CAU.
+<P></P>
+<DT><STRONG><A NAME="item_FA">FA</A></STRONG><BR>
+<DD>
+The <STRONG>f</STRONG>requency of this AC as computed from CTA and CAA.
+<P></P>
+<DT><STRONG><A NAME="item_RR">RR</A></STRONG><BR>
+<DD>
+The odds ratio of this AC.
+<P></P>
+<DT><STRONG><A NAME="item_p">p</A></STRONG><BR>
+<DD>
+A p-value as computed from a asymptotic Chi-Square statistics (which might be insufficient if sample sizes are low).
+<P></P>
+<DT><STRONG><A NAME="item_REE">REE</A></STRONG><BR>
+<DD>
+The normalized OR.
+<P></P></DL>
+<P>All following lines list ACs which satisfy the constraints given by certain arguments (<EM>minData</EM>, <EM>ORPredis</EM> <EM>ORProt</EM>). The next penetrance model is introduced by a <STRONG>Model:</STRONG> line.</P>
+
+</BODY>
+
+</HTML>

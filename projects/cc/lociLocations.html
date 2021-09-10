@@ -1,0 +1,157 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=iso-8859-1">
+  <meta name="GENERATOR" content="tlmu2html.pl">
+  <meta name="Author" content="Stefan Böhringer">
+  <meta name="Keywords" content="Homepage, Software, GNUstep, Genetics, Statistics, Stefan, Boehringer, Bohringer, Böhringer">
+  <meta name="Classification" content="Personal homepage">
+  <title>Loci Location Project</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-539280-1");
+pageTracker._trackPageview();
+</script>
+
+</head>
+<body style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);"
+ link="#0000ef" vlink="#59188e" alink="#ff0000">
+
+
+<a href="index.html">Home</a><br>
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tbody>
+<tr valign="top">
+ <td background="Pictures/dot.gif" width="1" valign="top" height="1" colspan="3"><img border="0" width="100%" height="1" alt=" " src="Pictures/null.gif" /></td>
+</tr>
+</table>
+
+<table width="740" nosave="" border="0" align="center">
+  <tbody>
+    <tr nosave="">
+      <td align="left" valign="top" nosave="">
+		<h3>Loci Location Project</h3>
+	</tr>
+	<tr>
+      <td align="left" valign="top" nosave="">
+
+	This tool is intended to retrieve physical locus positions from various sources. New sources can be extended for by making use of a plugin architecture. Currently supported sources are:
+	<ul>
+    	<li> Plain ascii files from ldb (now more or less obsolete)</li>
+    	<li> EMBL gene symbols (queried online)</li>
+	</ul>
+	Plans are to support online queries to NCBI.
+	</tr>
+	</tbody>
+</table>
+<br>
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tbody>
+<tr valign="top">
+ <td background="Pictures/dot.gif" width="1" valign="top" height="1" colspan="3"><img border="0" width="100%" height="1" alt=" " src="Pictures/null.gif" /></td>
+</tr>
+</table>
+
+<table width="740" nosave="" border="0" align="center">
+  <tbody>
+    <tr nosave="">
+      <td align="left" valign="top" nosave="">
+		<h3>Documentation</h3>
+	</tr>
+	<tr>
+      <td align="left" valign="top" nosave="">
+
+	<ul>
+		<li> <a href="docu/lociLocations.html">lociLocations.pl</a></li>
+	</ul>
+	<ul>
+		<li> Installing the <a href="http://www.ensembl.org/Docs/linked_docs/ensembl_tutorial.pdf">ENSEMBL API</a> (required to retrieve from ENSEMBL)</li>
+	</ul>
+	</tr>
+	</tbody>
+</table>
+<br>
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tbody>
+<tr valign="top">
+ <td background="Pictures/dot.gif" width="1" valign="top" height="1" colspan="3"><img border="0" width="100%" height="1" alt=" " src="Pictures/null.gif" /></td>
+</tr>
+</table>
+
+<table width="740" nosave="" border="0" align="center">
+  <tbody>
+    <tr nosave="">
+      <td align="left" valign="top" nosave="">
+		<h3>Example</h3>
+	</tr>
+	<tr>
+      <td align="left" valign="top" nosave="">
+
+Change to the tools directory in the coloredChromosomes package dir and issue:
+<pre>
+./lociLocations.pl --retrieveLoci 'BRCA2 HD HLA-DRB1 Huntingtin HLA SHGC-4397'
+</pre>
+
+
+The following output should result (some diagnostic output is ommitted):
+<pre>
+lociLocations.pl[26833]: List of unknown genes:
+HLA-DRB1
+Huntingtin
+HLA
+SHGC-4397
+{ BRCA2 = { p = "0.278489c13"; }; HD = { p = "0.016266c4"; }; }
+</pre>
+
+
+You can redirect just the location list by issuing, say:
+<pre>
+./lociLocations.pl --retrieveLoci 'BRCA2 HD HLA-DRB1 Huntingtin HLA SHGC-4397' > ~/myLoci.plist
+</pre>
+
+which would produce the 'myLoci.plist' file in your home directory.
+	</tr>
+	</tbody>
+</table>
+<br>
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tbody>
+<tr valign="top">
+ <td background="Pictures/dot.gif" width="1" valign="top" height="1" colspan="3"><img border="0" width="100%" height="1" alt=" " src="Pictures/null.gif" /></td>
+</tr>
+</table>
+
+<table width="740" nosave="" border="0" align="center">
+  <tbody>
+    <tr nosave="">
+      <td align="left" valign="top" nosave="">
+		<h3>Downloads</h3>
+	</tr>
+	<tr>
+      <td align="left" valign="top" nosave="">
+
+	<ul>
+		<li> The program itself is distributed with the <a href="http://sourceforge.net/project/showfiles.php?group_id=96998">coloredChromosomes package</a> and is contained in the tools folder.</li>
+		<li> One map constructed from ldb composes <a href="resources/gamesLoci.plist.gz">~ 6000 Microsatellites</a> in the human genome.</li>
+	</ul>
+	</tr>
+	</tbody>
+</table>
+<br>
+
+
+</body>
+</html>

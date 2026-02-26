@@ -1,0 +1,103 @@
+#!/bin/bash
+#
+# chkconfig: 2345 90 10
+# description: The vital GNUstep daemons to support IPC/DO
+#
+# skeleton	example file to build /etc/init.d/ scripts.
+#		This file should be used to construct scripts for /etc/init.d.
+#
+#		Written by Miquel van Smoorenburg <miquels@cistron.nl>.
+#		Modified for Debian GNU/Linux
+#		by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+#
+#		2003-01-08:
+#		basically rewritten by Stefan Böhringer <stefan.boerhinger@uni-essen.de>
+#			to work with RedHat (and should do so for many other distros)
+#			HOWTO:
+#			cp DownloadDir/gnustep /etc/init.d
+#			/sbin/chkconfig --add gnustep
+#
+# Version:	@(#)skeleton  1.9  26-Feb-2001  miquels@cistron.nl
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+GNUSTEP_ENV="/usr/GNUstep/System/Makefiles/GNUstep.sh"
+if [ -x $GNUSTEP_ENV ]; then
+	source $GNUSTEP_ENV
+else
+	echo "GNUstep is not installed or you have to change"
+	echo "GNUSTEP_ENV in /etc/init.d/gnustep"
+fi 
+
+NAME="gdomap gdnc"
+DESC="GNUstep daemons"
+
+set -e
+
+PID_GDOMAP_CMD="ps auxww | perl -ne 'print \"\$1 \" if (/(\d+).*\d\s+gdomap/om);'"
+PID_GDOMAP=`sh -c "$PID_GDOMAP_CMD"`
+PID_GDNC_CMD="ps auxww | perl -ne 'print \"\$1 \" if (/(\d+).*\d\s+gdnc/om);'"
+PID_GDNC=`sh -c "$PID_GDNC_CMD"`
+
+case "$1" in
+  start)
+	echo -n "Starting $DESC: "
+	if [ "$PID_GDOMAP" = "" ]; then
+		gdomap
+	fi
+	if [ "$PID_GDNC" = "" ]; then
+		gdnc
+	fi
+	echo "$NAME."
+	;;
+  stop)
+	echo -n "Stopping $DESC: "
+	if [ "$PID_GDOMAP" != "" ]; then
+		kill -1 $PID_GDOMAP
+	fi
+	if [ "$PID_GDNC" != "" ]; then
+		kill -1 $PID_GDNC
+	fi
+	echo "$NAME."
+	;;
+  reload)
+	#
+	#	If the daemon can reload its config files on the fly
+	#	for example by sending it SIGHUP, do it here.
+	#
+	#	If the daemon responds to changes in its config file
+	#	directly anyway, make this a do-nothing entry.
+	#
+	# echo "Reloading $DESC configuration files."
+	# start-stop-daemon --stop --signal 1 --quiet --pidfile \
+	#	/var/run/$NAME.pid --exec $DAEMON
+  ;;
+  restart|force-reload)
+	#
+	#	If the "reload" option is implemented, move the "force-reload"
+	#	option to the "reload" entry above. If not, "force-reload" is
+	#	just the same as "restart".
+	#
+	echo -n "Restarting $DESC: "
+	if [ "$PID_GDOMAP" != "" ]; then
+		kill -1 $PID_GDOMAP
+	fi
+	if [ "$PID_GDNC" != "" ]; then
+		kill -1 $PID_GDNC
+	fi
+
+	sleep 1
+
+	gdomap
+	gdnc
+	echo "$NAME."
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
+	echo "Usage: $N {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
